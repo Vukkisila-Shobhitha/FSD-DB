@@ -1,1 +1,2 @@
-create a server using NodeJS
+-Create a web server using NodeJS and http module
+
