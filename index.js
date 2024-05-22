@@ -1,44 +1,40 @@
-const { MongoClient } = require('mongodb');
+// file handling
+const fs = require('fs');
 
-async function main() {
-    //establish the connection to the mongodb server
+// read file
+//fs.readFile('test.txt','utf-8',(err,data) => {
+  //  if(err){
+    //    console.log(err);
+      //  return;
 
-    const url = `mongodb+srv://shobitha6294:shobi6294@mongodb1.wvf3nob.mongodb.net/?retryWrites=true&w=majority&appName=MongoDB1`;
-    
-    const client = new MongoClient(url);
+    //}
+    //console.log(data.split());
+//});
 
-    try {
-        //connect to the MongoDB Cluster
-        await client.connect(); 
-        console.log('Connected to the MongoDB cluster');
+//read file synchronously
+//try{
+  //  const data = fs.readFileSync('test.txt','utf-8');
+    //console.log(data);
+//} catch (error){
+  //  console.log(error);
+//}
 
-        //connect to the specific database
-        const database = client.db('sample_airbnb');
+//write file
+const data = '\n this is a new line of text.';
+//  fs.writeFile('test.txt',data,(err) => {
+//     if(err){
+//         console.log(err);
+//         return;
+//     }
+//     console.log("file written successfully");
+//  });
 
-        // connect to the specific collection
-        const collection = database.collection('listingsAndReviews');
 
-        //find all the documents with the country 'Brazil' in the collection
-        const query = { 'address.country': 'Brazil'};
-
-        //cursor: a pointer to the result set of a query
-        const cursor = collection.find(query);
-
-        const listings = await cursor.toArray();
-        console.log(listings.map(listing => [listing.name, listing.price]));
-
-       // iterate over the cursor
-       //await cursor.forEach(doc => {
-        //console.log(doc.name);
-       //});
+//write file in append mode
+fs.appendFile('test.txt', data, (err) => {
+    if(err){
+        console.log(err);
+        return;
     }
-    catch (e) {
-        console.error(e);
-    } 
-    finally {
-        await client.close();
-        console.log('connection closed');
-    }
-}
-
-main()
+    console.log('file written successfully');
+});
